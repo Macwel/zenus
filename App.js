@@ -1,5 +1,5 @@
 import React from 'react';
-import MapView, { Circle } from 'react-native-maps';
+import MapView, { Circle, Marker} from 'react-native-maps';
 import { View, Text, Button, Pressable,TouchableOpacity } from 'react-native';
 
 import { defaultDelta } from './const'
@@ -15,6 +15,17 @@ export default function App(props) {
     latitude: null,
     longitude: null,
   })
+  const [homeSandr, setHomeSandr] = React.useState({
+    latitude: 55.112243,
+    longitude: 61.36923,
+  });
+  const [homeIlya, setHomeIlya] = React.useState({
+    latitude: 55.173246,
+    longitude: 61.326718,
+  });
+
+
+
   const mapRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -74,7 +85,9 @@ export default function App(props) {
             }}
           // onRegionChangeComplete={(pin) => setPin(pin)}
           >
-            
+          <Marker pinColor="green" coordinate={homeSandr} title='Дом Сандра' />
+          <Marker pinColor="blue" coordinate={homeIlya} title='Дом Ильи' />
+
           </MapView>
           {/* <Text style={styles.text} onPress={goToHome}>Where i?</Text> */}
           <TouchableOpacity activeOpacity={0.7} style={styles.button} onPress={goToHome}>
