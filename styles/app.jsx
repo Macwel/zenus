@@ -39,4 +39,11 @@ export default StyleSheet.create({
       elevation: 3,
       backgroundColor: 'white',
     },
+    marker: {
+      height: 22,
+      width: 22,
+      borderRadius: 20,
+      borderColor: 'white',
+      borderWidth: 2,
+    },
   });

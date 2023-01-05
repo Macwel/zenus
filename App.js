@@ -1,39 +1,36 @@
-import React from 'react';
-import MapView, { Circle, Marker} from 'react-native-maps';
-import { View, Text, Button, Pressable,TouchableOpacity } from 'react-native';
+import React from "react";
+import MapView, { Circle, Marker } from "react-native-maps";
+import {
+  View,
+  Text,
+  Button,
+  Pressable,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+import CustomMarker from "./customMarker";
+import { defaultDelta } from "./const";
+import { MARKERS_DATA } from "./markersData";
+import styles from "./styles/app";
+import Animated from "react-native-reanimated";
 
-import { defaultDelta } from './const'
-
-import styles from './styles/app'
-
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 
 export default function App(props) {
-  const [load, setLoad] = React.useState(true)
+  const [load, setLoad] = React.useState(true);
 
   const [pin, setPin] = React.useState({
     latitude: null,
     longitude: null,
-  })
-  const [homeSandr, setHomeSandr] = React.useState({
-    latitude: 55.112243,
-    longitude: 61.36923,
   });
-  const [homeIlya, setHomeIlya] = React.useState({
-    latitude: 55.173246,
-    longitude: 61.326718,
-  });
-
-
 
   const mapRef = React.useRef(null);
 
   React.useEffect(() => {
     (async () => {
-
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
         return;
       }
 
@@ -42,8 +39,8 @@ export default function App(props) {
       setPin({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-      })
-      setLoad(false)
+      });
+      setLoad(false);
     })();
   }, []);
 
@@ -52,15 +49,19 @@ export default function App(props) {
       {
         ...pin,
         ...defaultDelta,
-      }, 2 * 300)
-  }
-  const { onPress, title = 'Click me' } = props;
+      },
+      2 * 300
+    );
+  };
+  const { onPress, title = "Click me" } = props;
   return (
     <View style={styles.container}>
-      {load ? (<Text style={styles.loadText}>Loading...</Text>) : (
+      {load ? (
+        <Text style={styles.loadText}>Loading...</Text>
+      ) : (
         <>
           <MapView
-            mapType="satelliteFlyover"
+            mapType="standart"
             ref={mapRef}
             style={styles.map}
             initialRegion={{
@@ -68,35 +69,51 @@ export default function App(props) {
               ...defaultDelta,
             }}
             showsUserLocation={true}
-            userInterfaceStyle='dark'
+            userInterfaceStyle="dark"
             // zoomTapEnabled={true}
             // tintColor='red'
             onUserLocationChange={(e) => {
-              if (e.nativeEvent.coordinate.latitude !== undefined || e.nativeEvent.coordinate.longitude !== undefined) {
-                console.log("onUserLocationChange", e.nativeEvent.coordinate)
+              if (
+                e.nativeEvent.coordinate.latitude !== undefined ||
+                e.nativeEvent.coordinate.longitude !== undefined
+              ) {
+                console.log("onUserLocationChange", e.nativeEvent.coordinate);
                 setPin({
                   latitude: e.nativeEvent.coordinate.latitude,
                   longitude: e.nativeEvent.coordinate.longitude,
-                })
+                });
               } else {
                 console.log(e.nativeEvent.coordinate);
-                console.log('onUserLocationChange pass coordinate');
+                console.log("onUserLocationChange pass coordinate");
               }
             }}
-          // onRegionChangeComplete={(pin) => setPin(pin)}
+            // onRegionChangeComplete={(pin) => setPin(pin)}
           >
-          <Marker pinColor="green" coordinate={homeSandr} title='Дом Сандра' />
-          <Marker pinColor="blue" coordinate={homeIlya} title='Дом Ильи' />
+            {/* <Marker pinColor="green" image={require("./svg/work4.png")} coordinate={homeSandr} title='Дом Сандра' /> */}
+            {/* <Marker pinColor="blue" style={styles.marker} image={require("./svg/work4.png")} coordinate={homeIlya}  title='Дом Ильи' /> */}
 
+            {MARKERS_DATA.map((marker) => (
+              <CustomMarker
+                key={marker.id}
+                id={marker.id}
+                selectedMarker={null}
+                color={marker.color}
+                latitude={marker.latitude}
+                longitude={marker.longitude}
+                title={marker.title}
+              ></CustomMarker>
+            ))}
           </MapView>
           {/* <Text style={styles.text} onPress={goToHome}>Where i?</Text> */}
-          <TouchableOpacity activeOpacity={0.7} style={styles.button} onPress={goToHome}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.button}
+            onPress={goToHome}
+          >
             <Text style={styles.text}>{title}</Text>
           </TouchableOpacity>
-        </>)}
-
-
-
+        </>
+      )}
     </View>
   );
 }
