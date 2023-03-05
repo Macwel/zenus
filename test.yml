@@ -7,6 +7,6 @@
       file:
         path: /home/back-dev/testFile
         state: touch
-        owner: root
-        group: root
+        owner: back-dev
+        group: back-dev
         mode: '0644'
