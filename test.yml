@@ -1,6 +1,9 @@
-- name: Hello World Sample
-  hosts: all
+- name: Wait for ssh to come up
+  hosts: "{{ instance_name }}"
+  become: false
+  gather_facts: no
+
   tasks:
-    - name: Hello Message
-      debug:
-        msg: "Hello World!"
+    - wait_for_connection:
+        delay: 15
+        timeout: 180  
