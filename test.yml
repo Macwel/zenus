@@ -1,12 +1,6 @@
-- name: Create File
+- name: Hello World Sample
   hosts: all
-  become: yes
-
   tasks:
-    - name: Touch file {{ token }}
-      file:
-        path: /home/back-dev/testFile1
-        state: touch
-        owner: back-dev
-        group: back-dev
-        mode: '0644'
+    - name: Hello Message
+      debug:
+        msg: {{ playbook_dir }}
