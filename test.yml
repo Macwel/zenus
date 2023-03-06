@@ -3,7 +3,7 @@
   tasks:
     - name: Example clone of a single branch
       ansible.builtin.git:
-        repo: "{{ SCM_URL }}"
+        repo: "{{ scm_url }}"
         dest: "{{ project_path }}"
         version: main
 
