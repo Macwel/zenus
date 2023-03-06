@@ -1,6 +1,5 @@
-- name: Hello World Sample
-  hosts: all
-  tasks:
-    - name: Hello Message
-      debug:
-        msg: "{{ playbook_dir }}"
+- name: Example clone of a single branch
+  ansible.builtin.git:
+    repo: {{ scm_url }}
+    dest: /src/ansible-examples
+    version: main
