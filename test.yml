@@ -3,4 +3,4 @@
   tasks:
     - name: Hello Message
       debug:
-        msg: {{ playbook_dir }}
+        msg: "{{ playbook_dir }}"
