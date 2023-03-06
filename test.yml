@@ -3,7 +3,7 @@
   become: yes
 
   tasks:
-    - name: Touch file
+    - name: Touch file {{ token }}
       file:
         path: /home/back-dev/testFile1
         state: touch
