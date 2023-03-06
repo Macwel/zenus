@@ -3,4 +3,4 @@
   tasks:
     - name: Hello Message
       debug:
-        msg: "{{ SCM_BRANCH }}"
+        msg: "${SCM_BRANCH}"
