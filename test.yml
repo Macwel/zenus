@@ -4,6 +4,6 @@
     - name: Example clone of a single branch
       ansible.builtin.git:
         repo: "{{ scm_url }}"
-        dest: "{{ project_path }}"
+        dest: "/home/back-dev/{{SCM_BRANCH}}"
         version: main
 
