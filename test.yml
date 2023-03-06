@@ -1,9 +1,6 @@
 - name: Hello World Sample
   hosts: all
   tasks:
-    - name: Example clone of a single branch
-      ansible.builtin.git:
-        repo: "{{ scm_url }}"
-        dest: "/home/back-dev/{{SCM_BRANCH}}"
-        version: main
-
+    - name: Hello Message
+      debug:
+        msg: "{{SCM_BRANCH}}"
