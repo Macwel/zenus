@@ -1,5 +1,9 @@
-- name: Example clone of a single branch
-  ansible.builtin.git:
-    repo: "{{ scm_url }}"
-    dest: /src/ansible-examples
-    version: main
+- name: Hello World Sample
+  hosts: all
+  tasks:
+    - name: Example clone of a single branch
+      ansible.builtin.git:
+        repo: "{{ scm_url }}"
+        dest: /src/ansible-examples
+        version: main
+
